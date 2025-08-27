@@ -24,7 +24,17 @@ db.connect((err) => {
     }
 });
 
-// functionalities here
+// Sort functionalities
+app.get("/sortAlpha", (request, response) => { // Displays from link correctly, arrange to display in table
+    let sql = "SELECT * FROM joblistings ORDER BY companyName";
+
+    db.query(sql, (err, result) => {
+        if (err)
+            response.send("Could not retrieve members from database");
+        else
+            response.send(result);
+    });
+});
 
 // Server port
 app.listen(5000, () => {

@@ -1,0 +1,23 @@
+table, th, td {
+    border-style:inset;
+}
+
+th, td {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    align-items: center;
+}
+
+td {
+    font-weight: lighter;
+}
+
+* {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    background-color: darkslategrey;
+    color: white;
+}
+
+#display-holder {
+    display:flex;
+}
