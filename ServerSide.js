@@ -65,8 +65,18 @@ app.get("/sortDate", (request, response) => {
             response.json(result);
     });
 });
-app.get("/sortStatus", (request, response) => {
+app.get("/sortAction", (request, response) => {
     let sql = "SELECT * FROM joblistings ORDER BY actionStatus";
+
+    db.query(sql, (err, result) => {
+        if (err)
+            response.status(500).send("Could not retrieve members from database");
+        else
+            response.json(result);
+    });
+});
+app.get("/sortResponse", (request, response) => {
+    let sql = "SELECT * FROM joblistings ORDER BY responseStatus";
 
     db.query(sql, (err, result) => {
         if (err)

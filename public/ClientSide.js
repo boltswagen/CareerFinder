@@ -18,8 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 case "dateAdded":
                     jobs = await loadDate();
                     break;
-                case "status":
-                    jobs = await loadStatus();
+                case "action":
+                    jobs = await loadAction();
+                    break;
+                case "response":
+                    jobs = await loadResponse();
                     break;
             }
             const tbody = document.querySelector("#displayTable tbody");
@@ -118,14 +121,25 @@ async function loadDate(){
         return [];
     }
 }
-async function loadStatus(){
+async function loadAction(){
     try {
-        const res = await fetch("http://localhost:5000/sortStatus");
+        const res = await fetch("http://localhost:5000/sortAction");
         const jobs = await res.json();
         return jobs;
     }
     catch (err){
-        console.error("Error loading status-sorted jobs: ", err);
+        console.error("Error loading action-sorted jobs: ", err);
+        return [];
+    }
+}
+async function loadResponse(){
+    try {
+        const res = await fetch("http://localhost:5000/sortResponse");
+        const jobs = await res.json();
+        return jobs;
+    }
+    catch (err){
+        console.error("Error loading response-sorted jobs: ", err);
         return [];
     }
 }
