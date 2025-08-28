@@ -3,25 +3,27 @@
     <head>
         <title>CareerFinder</title>
         
-        <!-- Link CSS here -->
+        <!-- Link CSS -->
         <link rel = "stylesheet" href = "tabledesign.css"/>
     </head>
     <body>
         <center><h2>Career Finder Database</h2></center>
         <div id = "display-holder">
-            <table>
-                <tr>
-                    <th></th>
-                    <th>#ID</th>
-                    <th>Company Name</th>
-                    <th>Position Name</th>
-                    <th>Place</th>
-                    <th>Location</th>
-                    <th>Date Added</th>
-                    <th>Action Status</th>
-                    <th>Response Status</th>
-                    <th>Other Notes</th>
-                </tr>
+            <table id = "displayTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>#ID</th>
+                        <th>Company Name</th>
+                        <th>Position Name</th>
+                        <th>Place</th>
+                        <th>Location</th>
+                        <th>Date Added</th>
+                        <th>Action Status</th>
+                        <th>Response Status</th>
+                        <th>Other Notes</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <!-- added entries go here -->
                 </tbody>
@@ -30,7 +32,7 @@
             <!-- Sorting modes -->
             <div id = "sorting-modes" style="margin-left:5%;">
                 <h3> Sort By: </h3>
-                <label><input type = "radio" name = "sort" class = "sort" value = "alpha" checked/> ABC </label>
+                <label><input type = "radio" name = "sort" class = "sort" value = "alpha" checked/> Company </label>
                 <br/>
                 <label><input type = "radio" name = "sort" class = "sort" value = "place"/> Place </label>
                 <br/>
@@ -41,5 +43,8 @@
                 <label><input type = "radio" name = "sort" class = "sort" value = "status"/> Status </label>
             </div>
         </div>
+
+        <!-- Link JS -->
+        <script src = "ClientSide.js"></script>
     </body>
 </html>

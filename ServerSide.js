@@ -25,14 +25,54 @@ db.connect((err) => {
 });
 
 // Sort functionalities
-app.get("/sortAlpha", (request, response) => { // Displays from link correctly, arrange to display in table
+app.get("/sortAlpha", (request, response) => {
     let sql = "SELECT * FROM joblistings ORDER BY companyName";
 
     db.query(sql, (err, result) => {
         if (err)
-            response.send("Could not retrieve members from database");
+            response.status(500).send("Could not retrieve members from database");
         else
-            response.send(result);
+            response.json(result);
+    });
+});
+app.get("/sortPlace", (request, response) => {
+    let sql = "SELECT * FROM joblistings ORDER BY place";
+
+    db.query(sql, (err, result) => {
+        if (err)
+            response.status(500).send("Could not retrieve members from database");
+        else
+            response.json(result);
+    });
+});
+app.get("/sortLocation", (request, response) => {
+    let sql = "SELECT * FROM joblistings ORDER BY location";
+
+    db.query(sql, (err, result) => {
+        if (err)
+            response.status(500).send("Could not retrieve members from database");
+        else
+            response.json(result);
+    });
+});
+app.get("/sortDate", (request, response) => {
+    let sql = "SELECT * FROM joblistings ORDER BY dateAdded";
+
+    db.query(sql, (err, result) => {
+        if (err)
+            response.status(500).send("Could not retrieve members from database");
+        else
+            response.json(result);
+    });
+});
+app.get("/sortStatus", (request, response) => {
+    let sql = "SELECT * FROM joblistings ORDER BY actionStatus";
+
+    db.query(sql, (err, result) => {
+        if (err)
+            response.status(500).send("Could not retrieve members from database");
+        else
+            response.json(result);
     });
 });
 
