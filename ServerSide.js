@@ -86,6 +86,32 @@ app.get("/sortResponse", (request, response) => {
     });
 });
 
+// Adding a new row
+app.post("/addposting", (request, response) => {
+    const job = {
+        id: request.body.id,
+        companyName: request.body.companyName,
+        positionName: request.body.positionName,
+        place: request.body.place,
+        location: request.body.location,
+        dateAdded: request.body.dateAdded,
+        actionStatus: request.body.actionStatus,
+        responseStatus: request.body.responseStatus,
+        otherNotes: request.body.otherNotes,
+    };
+
+    let sql = "INSERT INTO joblistings SET ?";
+
+    db.query(sql, job, (err, result) => {
+        if (err){
+            response.send("Could not insert new posting");
+        }
+        else {
+            response.send("New posting has been inserted successfully");
+        }
+    })
+})
+
 // Server port
 app.listen(5000, () => {
     console.log("Server running on port 5000");

@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 tr.appendChild(locationCell);
 
                 const dateCell = document.createElement("td");
-                dateCell.textContent = job.dateAdded;
+                dateCell.textContent = new Date(job.dateAdded).toISOString().split('T')[0];
                 tr.appendChild(dateCell);
 
                 const actionCell = document.createElement("td");
@@ -143,3 +143,43 @@ async function loadResponse(){
         return [];
     }
 }
+
+// Add action
+document.addEventListener("DOMContentLoaded", () => {
+    const addButton = document.getElementById("save-to-db");
+
+    addButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        const now = new Date();
+
+        const job = {
+            id: crypto.randomUUID(),
+            companyName: document.getElementById("company-name").value,
+            positionName: document.getElementById("position-name").value,
+            place: document.querySelector('select[name="place"]').value,
+            location: document.getElementById("location-name").value,
+            dateAdded: now.toISOString().split('T')[0],
+            actionStatus: document.querySelector('select[name="action"]').value,
+            responseStatus: document.querySelector('select[name="response"]').value,
+            otherNotes: document.getElementById("other-notes").value,
+        };
+
+        fetch ("/addposting", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(job)
+        })
+        .then(res => res.text())
+        .then(data => {
+            alert(data);
+            if (data.includes("successfully")){
+                document.getElementById("add-entry").reset();
+            }
+        })
+        .catch(err => {
+            console.error("Error submitting member:", err);
+        })
+    })
+})

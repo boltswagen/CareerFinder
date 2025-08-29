@@ -27,6 +27,47 @@
                 <tbody>
                     <!-- added entries go here -->
                 </tbody>
+                <tr>
+                    <form id = "add-entry">
+                        <td>
+                            <button type = "button" id = "save-to-db"> Save </button>
+                        </td>
+                        <td></td>
+                        <td>
+                            <input type = "text" id = "company-name"/>
+                        </td>
+                        <td>
+                            <input type = "text" id = "position-name"/>
+                        </td>
+                        <td>
+                            <select name = "place">
+                                <option value = "inperson">In-Person</option>
+                                <option value = "hybrid">Hybrid</option>
+                                <option value = "remote">Remote</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type = "text" id = "location-name"/>
+                        </td>
+                        <td></td>
+                        <td>
+                            <select name = "action">
+                                <option value = "applied">Applied</option>
+                                <option value = "notapplied">Not Applied</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name = "response">
+                                <option value = "picked">Picked</option>
+                                <option value = "rejected">Rejected</option>
+                                <option value = "noresponse">No Response</option>
+                            </select>
+                        </td>
+                        <td>
+                            <textarea name = "othernotes" id = "other-notes"></textarea>
+                        </td>
+                    </form>
+                </tr>
             </table>
 
             <!-- Sorting modes -->
