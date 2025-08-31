@@ -31,44 +31,57 @@ document.addEventListener("DOMContentLoaded", () => {
             jobs.forEach(job => {
                 const tr = document.createElement("tr");
 
-                const emptyCell = document.createElement("td");
-                emptyCell.textContent = "";
-                tr.appendChild(emptyCell);
+                const editCell = document.createElement("td");
+                const editButton = document.createElement("button");
+                editButton.textContent = "Edit";
+                editButton.className = "edit-button";
+                editButton.id = job.id;
+                editCell.appendChild(editButton);
+                tr.appendChild(editCell);
 
                 const idCell = document.createElement("td");
                 idCell.textContent = job.id;
+                idCell.className = `job-${job.id}`;
                 tr.appendChild(idCell);
 
                 const companyCell = document.createElement("td");
                 companyCell.textContent = job.companyName;
+                companyCell.className = `job-${job.id}`;
                 tr.appendChild(companyCell);
 
                 const positionCell = document.createElement("td");
                 positionCell.textContent = job.positionName;
+                positionCell.className = `job-${job.id}`;
                 tr.appendChild(positionCell);
 
                 const placeCell = document.createElement("td");
                 placeCell.textContent = job.place;
+                placeCell.className = `job-${job.id}`;
                 tr.appendChild(placeCell);
 
                 const locationCell = document.createElement("td");
                 locationCell.textContent = job.location;
+                locationCell.className = `job-${job.id}`;
                 tr.appendChild(locationCell);
 
                 const dateCell = document.createElement("td");
                 dateCell.textContent = new Date(job.dateAdded).toISOString().split('T')[0];
+                dateCell.className = `job-${job.id}`;
                 tr.appendChild(dateCell);
 
                 const actionCell = document.createElement("td");
                 actionCell.textContent = job.actionStatus;
+                actionCell.className = `job-${job.id}`;
                 tr.appendChild(actionCell);
 
                 const responseCell = document.createElement("td");
                 responseCell.textContent = job.responseStatus;
+                responseCell.className = `job-${job.id}`;
                 tr.appendChild(responseCell);
 
                 const otherCell = document.createElement("td");
                 otherCell.textContent = job.otherNotes;
+                otherCell.className = `job-${job.id}`;
                 tr.appendChild(otherCell);
 
                 tbody.appendChild(tr);
@@ -151,9 +164,10 @@ document.addEventListener("DOMContentLoaded", () => {
     addButton.addEventListener("click", (event) => {
         event.preventDefault();
         const now = new Date();
+        const idNumber = crypto.randomUUID();
 
         const job = {
-            id: crypto.randomUUID(),
+            id: idNumber,
             companyName: document.getElementById("company-name").value,
             positionName: document.getElementById("position-name").value,
             place: document.querySelector('select[name="place"]').value,
@@ -180,6 +194,50 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => {
             console.error("Error submitting member:", err);
-        })
-    })
-})
+        });
+    });
+});
+
+// Edit action
+document.addEventListener("click", (event) => {
+    if (event.target.classList.contains("edit-button")) {
+        const button = event.target;
+        const row = button.closest("tr");
+
+        if (button.textContent === "Edit"){
+            row.querySelectorAll("td:not(:first-child):not(:nth-child(2))").forEach(cell => {
+                const value = cell.textContent;
+                cell.innerHTML = `<input type="text" value="${value}">`;
+            });
+            button.textContent = "Save";
+        }
+        else {
+            const inputs = row.querySelectorAll("input");
+            const updateJob = {
+                id: row.cells[1].textContent,
+                companyName: inputs[0].value,
+                positionName: inputs[1].value,
+                place: inputs[2].value,
+                location: inputs[3].value,
+                dateAdded: inputs[4].value,
+                actionStatus: inputs[5].value,
+                responseStatus: inputs[6].value,
+                otherNotes: inputs[7].value
+            };
+
+            fetch("/editposting", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updateJob)
+            })
+            .then(res => res.text())
+            .then(data => alert(data))
+            .catch(err => console.error("Error editing: ", err));
+
+            row.querySelectorAll("td:not(:first-child):not(:nth-child(2))").forEach((cell, i) => {
+                cell.textContent = inputs[i].value;
+            });
+            button.textContent = "Edit";
+        }
+    }
+});

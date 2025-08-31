@@ -109,8 +109,36 @@ app.post("/addposting", (request, response) => {
         else {
             response.send("New posting has been inserted successfully");
         }
-    })
-})
+    });
+});
+
+// Editing a row
+app.put("/editposting", (request, response) => {
+    const updatedPosting = {
+        companyName: request.body.companyName,
+        positionName: request.body.positionName,
+        place: request.body.place,
+        location: request.body.location,
+        dateAdded: request.body.dateAdded,
+        actionStatus: request.body.actionStatus,
+        responseStatus: request.body.responseStatus,
+        otherNotes: request.body.otherNotes
+    };
+
+    const id = request.body.id;
+
+    let sql = "UPDATE joblistings SET ? WHERE id = ?";
+
+    db.query(sql, [updatedPosting, id], (err, result) => {
+        if (err){
+            console.error(err);
+            response.send(`Could not update member with id = ${id}`);
+        }
+        else {
+            response.send(`Member with id ${id} has been updated successfully.`);
+        }
+    });
+});
 
 // Server port
 app.listen(5000, () => {
